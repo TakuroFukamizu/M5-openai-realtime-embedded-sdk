@@ -73,11 +73,11 @@ void oai_http_request(char *offer, char *answer) {
   esp_http_client_config_t config;
   memset(&config, 0, sizeof(esp_http_client_config_t));
 
-  config.url = OPENAI_REALTIMEAPI;
+  config.url = CONFIG_OPENAI_REALTIMEAPI;
   config.event_handler = oai_http_event_handler;
   config.user_data = answer;
 
-  snprintf(answer, MAX_HTTP_OUTPUT_BUFFER, "Bearer %s", OPENAI_API_KEY);
+  snprintf(answer, MAX_HTTP_OUTPUT_BUFFER, "Bearer %s", CONFIG_OPENAI_API_KEY);
 
   esp_http_client_handle_t client = esp_http_client_init(&config);
   esp_http_client_set_method(client, HTTP_METHOD_POST);

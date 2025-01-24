@@ -42,12 +42,12 @@ void oai_wifi(void) {
   ESP_ERROR_CHECK(esp_wifi_set_mode(WIFI_MODE_STA));
   ESP_ERROR_CHECK(esp_wifi_start());
 
-  ESP_LOGI(LOG_TAG, "Connecting to WiFi SSID: %s", WIFI_SSID);
+  ESP_LOGI(LOG_TAG, "Connecting to WiFi SSID: %s", CONFIG_WIFI_SSID);
   wifi_config_t wifi_config;
   memset(&wifi_config, 0, sizeof(wifi_config));
-  strncpy((char *)wifi_config.sta.ssid, (char *)WIFI_SSID,
+  strncpy((char *)wifi_config.sta.ssid, (char *)CONFIG_WIFI_SSID,
           sizeof(wifi_config.sta.ssid));
-  strncpy((char *)wifi_config.sta.password, (char *)WIFI_PASSWORD,
+  strncpy((char *)wifi_config.sta.password, (char *)CONFIG_WIFI_PASSWORD,
           sizeof(wifi_config.sta.password));
 
   ESP_ERROR_CHECK(esp_wifi_set_config(
