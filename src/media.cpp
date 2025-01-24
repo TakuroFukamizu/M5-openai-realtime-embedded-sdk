@@ -147,21 +147,28 @@ void oai_init_audio_capture() {
 #else // CONFIG_MEDIA_I2S_RX_TX_SHARED
     ESP_ERROR_CHECK(i2s_new_channel(&chan_config, &s_i2s_tx_handle, nullptr));
 #endif // CONFIG_MEDIA_I2S_RX_TX_SHARED
+    auto spk_cfg = M5.Speaker.config();
+    auto mic_cfg = M5.Mic.config();
+    // spk_cfg.sample_rate = SAMPLE_RATE;
+    // M5.Speaker.config(spk_cfg);
     i2s_std_config_t std_cfg = {
         .clk_cfg = I2S_STD_CLK_DEFAULT_CONFIG(SAMPLE_RATE),
-        .slot_cfg = I2S_STD_PHILIPS_SLOT_DEFAULT_CONFIG(I2S_DATA_BIT_WIDTH_16BIT, I2S_SLOT_MODE_MONO ),
-        .gpio_cfg = {
-            .mclk = gpio_num_t(CONFIG_MEDIA_I2S_TX_MCLK_PIN),
-            .bclk = gpio_num_t(CONFIG_MEDIA_I2S_TX_BCLK_PIN),
-            .ws = gpio_num_t(CONFIG_MEDIA_I2S_TX_LRCLK_PIN),
-            .dout = gpio_num_t(CONFIG_MEDIA_I2S_TX_DATA_PIN),
-            .din = gpio_num_t(CONFIG_MEDIA_I2S_RX_DATA_PIN),
-            .invert_flags = {
-                .mclk_inv = false,
-                .bclk_inv = false,
-                .ws_inv = false,
+        .slot_cfg = I2S_STD_PHILIPS_SLOT_DEFAULT_CONFIG(
+            I2S_DATA_BIT_WIDTH_16BIT, I2S_SLOT_MODE_MONO),
+        .gpio_cfg =
+            {
+                .mclk = gpio_num_t(mic_cfg.pin_mck),
+                .bclk = gpio_num_t(spk_cfg.pin_bck),
+                .ws = gpio_num_t(spk_cfg.pin_ws),
+                .dout = gpio_num_t(spk_cfg.pin_data_out),
+                .din = gpio_num_t(mic_cfg.pin_data_in),
+                .invert_flags =
+                    {
+                        .mclk_inv = false,
+                        .bclk_inv = false,
+                        .ws_inv = false,
+                    },
             },
-        },
     };
     std_cfg.slot_cfg.data_bit_width = i2s_data_bit_width_t::I2S_DATA_BIT_WIDTH_16BIT;
     std_cfg.slot_cfg.slot_bit_width = i2s_slot_bit_width_t::I2S_SLOT_BIT_WIDTH_16BIT;

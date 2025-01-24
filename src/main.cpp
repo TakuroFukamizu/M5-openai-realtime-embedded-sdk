@@ -45,6 +45,7 @@ extern "C" void app_main(void) {
   auto cfg = M5.config();
   cfg.internal_spk = false;
   cfg.internal_mic = false;
+  cfg.external_speaker.atomic_echo = true; // ATOMIC ECHO BASE
   M5.begin(cfg);
 
   ESP_ERROR_CHECK(esp_event_loop_create_default());
