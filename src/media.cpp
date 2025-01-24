@@ -9,6 +9,8 @@
 #include <cstdint>
 #include <vector>
 #include <sys/socket.h>
+#include "es8311.h"
+#include "es8311_reg.h"
 
 #define OPUS_OUT_BUFFER_SIZE 1276  // 1276 bytes is recommended by opus_encode
 #define SAMPLE_RATE 8000
@@ -114,6 +116,25 @@ static void initialize_microphone_cores3()
   }
 }
 
+static void initialize_atomic_echo_base() {
+  // Initialize ES8311 codec
+  ESP_LOGI(TAG, "Initializing ES8311 codec(ADC/DAC)");
+  es8311_init((uint32_t)SAMPLE_RATE, ES8311_RESOLUTION_16);
+
+  ESP_LOGI(TAG, "set ES8311 spk volume");
+  es8311_voice_volume_set(50, NULL); // TODO: fix volume
+
+  ESP_LOGI(TAG, "set ES8311 microphone");
+  es8311_microphone_config(true); // use mic
+
+  // Initialize PI4IOE5V6408 I2C expander
+  ESP_LOGI(TAG, "Initializing PI4IOE5V6408");
+  pi4ioe_init();
+  
+  // set un-mute
+  pi4ioe_setMute(false);
+}
+
 void oai_init_audio_capture() {
 #ifdef CONFIG_MEDIA_INIT_MICROPHONE_AND_SPEAKER
   ESP_LOGI(TAG, "Initializing microphone");
@@ -137,6 +158,10 @@ void oai_init_audio_capture() {
   s_debug_audio_out_dest_addr.sin_family = AF_INET;
   s_debug_audio_out_dest_addr.sin_port = htons(CONFIG_MEDIA_DEBUG_AUDIO_OUT_PORT);
 #endif // CONFIG_MEDIA_ENABLE_DEBUG_AUDIO_UDP_CLIENT
+
+#ifdef CONFIG_MEDIA_ATOMIC_ECHO_BASE
+  initialize_atomic_echo_base();
+#endif
 
   ESP_LOGI(TAG, "Initializing I2S for audio input/output");
   {

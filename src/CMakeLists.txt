@@ -1,4 +1,4 @@
-set(COMMON_SRC "webrtc.cpp" "main.cpp" "http.cpp" "bsp.cpp")
+set(COMMON_SRC "es8311.cpp" "webrtc.cpp" "main.cpp" "http.cpp" "bsp.cpp")
 
 if(IDF_TARGET STREQUAL linux)
 	idf_component_register(

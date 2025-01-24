@@ -157,4 +157,10 @@ menu "Embedded SDK Configuration"
         depends on ENABLE_HEAP_MONITOR
         help
             The interval in milliseconds to print the heap monitor.
+    config MEDIA_ATOMIC_ECHO_BASE
+        bool "Use Atomic Echo Base"
+        default n
+        help
+            If this option is set (not default), 
+            use ES8311 and PI4IOE.
 endmenu

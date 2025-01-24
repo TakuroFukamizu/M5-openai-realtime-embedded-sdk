@@ -27,6 +27,7 @@ Select the target board.
 
 * CoreS3 (SE) - `export SDK_CONFIG="sdkconfig.defaults;sdkconfig.defaults.cores3`
 * AtomS3    (with Atomic Speaker and PDM Microphone Unit) - `export SDK_CONFIG="sdkconfig.defaults;sdkconfig.defaults.atoms3`
+* AtomS3    (with Atomic Echo Base) - `export SDK_CONFIG="sdkconfig.defaults;sdkconfig.defaults.atoms3_echobase"`
 * Atom Lite (with Atomic Speaker and PDM Microphone Unit) - `export SDK_CONFIG="sdkconfig.defaults;sdkconfig.defaults.atom_lite`
 
 Call `set-target` with the platform you are targetting. Today only `linux`, `esp32` and `esp32s3` are supported.
