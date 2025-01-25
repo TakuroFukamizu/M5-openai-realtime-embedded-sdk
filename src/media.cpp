@@ -2,18 +2,12 @@
 #include <opus.h>
 
 #include "main.h"
+#include "board.h"
 
 #define OPUS_OUT_BUFFER_SIZE 1276  // 1276 bytes is recommended by opus_encode
 #define SAMPLE_RATE 8000
 #define BUFFER_SAMPLES 320
 
-#define MCLK_PIN 0
-#define DAC_BCLK_PIN 15
-#define DAC_LRCLK_PIN 16
-#define DAC_DATA_PIN 17
-#define ADC_BCLK_PIN 38
-#define ADC_LRCLK_PIN 39
-#define ADC_DATA_PIN 40
 
 #define OPUS_ENCODER_BITRATE 30000
 #define OPUS_ENCODER_COMPLEXITY 0
